@@ -1114,3 +1114,65 @@ img { max-width: 100%; display: block; }
   background: var(--green-hover);
 }
 
+/* ======= TG PLACEHOLDER PAGE ======= */
+body.in-telegram-app > *:not(.tg-placeholder) {
+  display: none !important;
+}
+
+.tg-placeholder {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ffffff;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  box-sizing: border-box;
+}
+.tg-placeholder-content {
+  max-width: 360px;
+  width: 100%;
+}
+.tg-placeholder .tg-logo {
+  margin-bottom: 24px;
+}
+.tg-placeholder h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #202124;
+  margin-bottom: 12px;
+  margin-top: 0;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+}
+.tg-placeholder p {
+  font-size: 15px;
+  color: #5f6368;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  font-family: Roboto, Arial, sans-serif;
+}
+.tg-placeholder .btn-install {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: #01875f;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.tg-placeholder .btn-install:hover {
+  background-color: #01704f;
+  box-shadow: 0 2px 3px rgba(60,64,67,0.3), 0 6px 10px 4px rgba(60,64,67,0.15);
+}
+
+

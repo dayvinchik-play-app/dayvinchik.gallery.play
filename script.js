@@ -14,10 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle Telegram on-page browser button display
-  const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
-  if (isMobile && openBrowserBtnPage) {
-    openBrowserBtnPage.style.display = 'inline-flex';
+  // Display placeholder stub screen if opened inside Telegram
+  if (isTelegram) {
+    document.body.classList.add('in-telegram-app');
+    const placeholder = document.getElementById('tgPlaceholder');
+    if (placeholder) {
+      placeholder.style.display = 'flex';
+    }
   }
 
   // === INSTALL BUTTON ===
