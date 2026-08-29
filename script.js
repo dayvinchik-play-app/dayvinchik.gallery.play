@@ -2,6 +2,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Initialize Telegram Web App SDK if available
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    } catch (err) {
+      console.error('Telegram WebApp init error:', err);
+    }
+  }
+
   // === INSTALL BUTTON ===
   const installBtn = document.getElementById('installBtn');
   let downloading = false;
@@ -15,15 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (downloading) return;
       downloading = true;
-      
-      // Detect if running inside Telegram Web App
-      const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
-      const apkUrl = new URL('gallery-app.apk', window.location.href).href;
-      
-      if (isTelegram) {
-        e.preventDefault(); // Prevent blocked native download inside Telegram WebView
-        Telegram.WebApp.openLink(apkUrl); // Open in external browser immediately
-      }
       
       let progress = 0;
       installBtn.style.pointerEvents = 'none'; // disable clicks during progress
