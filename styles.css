@@ -199,6 +199,29 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
 }
 
+.btn-open-browser {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: var(--green);
+  border: 1px solid var(--green);
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s;
+  text-decoration: none;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+.btn-open-browser:hover {
+  background: var(--green-light);
+}
+
 .btn-share {
   display: inline-flex;
   align-items: center;

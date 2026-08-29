@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Telegram Web App SDK if available
+  const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
   if (window.Telegram && window.Telegram.WebApp) {
     try {
       window.Telegram.WebApp.ready();
@@ -10,6 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Telegram WebApp init error:', err);
     }
+  }
+
+  // Handle Telegram on-page browser button display & action
+  const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
+  if (isTelegram && openBrowserBtnPage) {
+    openBrowserBtnPage.style.display = 'inline-flex';
+    openBrowserBtnPage.addEventListener('click', () => {
+      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
+      try {
+        window.Telegram.WebApp.openLink(currentUrl);
+      } catch (err) {
+        window.open(currentUrl, '_blank');
+      }
+    });
   }
 
   // === INSTALL BUTTON ===
@@ -23,19 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
-      if (downloading) return;
-      
-      // Detect if running inside Telegram Web App
-      const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
-      
       if (isTelegram) {
         e.preventDefault();
-        const modal = document.getElementById('tgModal');
-        if (modal) modal.classList.add('show');
+        showToast('Используйте кнопку "Открыть в браузере" ниже');
         return;
       }
       
+      if (downloading) return;
       downloading = true;
+      
       let progress = 0;
       installBtn.style.pointerEvents = 'none'; // disable clicks during progress
       installBtn.innerHTML = 'Скачивание... 0%';
@@ -135,34 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const icon = supportToggle.querySelector('svg');
       icon.style.transform = supportBody.classList.contains('open') ? 'rotate(180deg)' : '';
       icon.style.transition = 'transform 0.2s';
-    });
-  }
-
-  // === TELEGRAM MODAL CLOSE ===
-  const tgModal = document.getElementById('tgModal');
-  const closeModal = document.getElementById('closeModal');
-  if (tgModal && closeModal) {
-    closeModal.addEventListener('click', () => {
-      tgModal.classList.remove('show');
-    });
-  }
-
-  // === TELEGRAM OPEN IN EXTERNAL BROWSER ===
-  const openInBrowserBtn = document.getElementById('openInBrowserBtn');
-  if (openInBrowserBtn) {
-    openInBrowserBtn.addEventListener('click', () => {
-      // Use the specific GitHub Pages URL
-      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
-      
-      if (window.Telegram && window.Telegram.WebApp) {
-        try {
-          window.Telegram.WebApp.openLink(currentUrl);
-        } catch (err) {
-          window.open(currentUrl, '_blank');
-        }
-      } else {
-        window.open(currentUrl, '_blank');
-      }
     });
   }
 
