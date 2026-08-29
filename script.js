@@ -19,32 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isMobile && openBrowserBtnPage) {
     openBrowserBtnPage.style.display = 'inline-flex';
     openBrowserBtnPage.addEventListener('click', (e) => {
-      const targetDomain = 'dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
-      const isAndroid = /Android/i.test(navigator.userAgent);
+      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
       
-      if (isAndroid) {
-        // Try googlechrome:// protocol first (often bypasses WebView blocks)
-        const googleChromeUrl = `googlechrome://navigate?url=https://${targetDomain}`;
-        const intentUrl = `intent://${targetDomain}#Intent;scheme=https;package=com.android.chrome;end`;
-        
-        window.location.href = googleChromeUrl;
-        
-        // Fallback to Intent scheme if the custom protocol isn't caught
-        setTimeout(() => {
-          window.location.href = intentUrl;
-        }, 500);
-      } else {
-        // Fallback for iOS/Desktop
-        const fallbackUrl = `https://${targetDomain}`;
-        if (window.Telegram && window.Telegram.WebApp) {
-          try {
-            window.Telegram.WebApp.openLink(fallbackUrl);
-          } catch (err) {
-            window.open(fallbackUrl, '_blank');
-          }
-        } else {
-          window.open(fallbackUrl, '_blank');
+      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown') {
+        try {
+          window.Telegram.WebApp.openLink(currentUrl);
+        } catch (err) {
+          window.open(currentUrl, '_blank');
         }
+      } else {
+        window.open(currentUrl, '_blank');
       }
     });
   }
