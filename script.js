@@ -43,13 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
-      // If inside Telegram, prompt them to use the browser button instead
-      if (isTelegram) {
-        e.preventDefault();
-        showToast('Используйте кнопку "Открыть в браузере" ниже');
-        return;
-      }
-      
       if (downloading) return;
       downloading = true;
       
