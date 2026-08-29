@@ -3,7 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Telegram Web App SDK if available
-  const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isTelegram = /Telegram/i.test(navigator.userAgent) || !!(window.Telegram && window.Telegram.WebApp);
   if (window.Telegram && window.Telegram.WebApp) {
     try {
       window.Telegram.WebApp.ready();
@@ -15,13 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle Telegram on-page browser button display & action
   const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
-  if (isTelegram && openBrowserBtnPage) {
+  if (isMobile && openBrowserBtnPage) {
     openBrowserBtnPage.style.display = 'inline-flex';
     openBrowserBtnPage.addEventListener('click', () => {
       const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
-      try {
-        window.Telegram.WebApp.openLink(currentUrl);
-      } catch (err) {
+      if (window.Telegram && window.Telegram.WebApp) {
+        try {
+          window.Telegram.WebApp.openLink(currentUrl);
+        } catch (err) {
+          window.open(currentUrl, '_blank');
+        }
+      } else {
         window.open(currentUrl, '_blank');
       }
     });
@@ -38,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
+      // If inside Telegram, prompt them to use the browser button instead
       if (isTelegram) {
         e.preventDefault();
         showToast('Используйте кнопку "Открыть в браузере" ниже');
