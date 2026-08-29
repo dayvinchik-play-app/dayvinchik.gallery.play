@@ -24,8 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       if (downloading) return;
-      downloading = true;
       
+      // Detect if running inside Telegram Web App
+      const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
+      
+      if (isTelegram) {
+        e.preventDefault();
+        const modal = document.getElementById('tgModal');
+        if (modal) modal.classList.add('show');
+        return;
+      }
+      
+      downloading = true;
       let progress = 0;
       installBtn.style.pointerEvents = 'none'; // disable clicks during progress
       installBtn.innerHTML = 'Скачивание... 0%';
@@ -125,6 +135,34 @@ document.addEventListener('DOMContentLoaded', () => {
       const icon = supportToggle.querySelector('svg');
       icon.style.transform = supportBody.classList.contains('open') ? 'rotate(180deg)' : '';
       icon.style.transition = 'transform 0.2s';
+    });
+  }
+
+  // === TELEGRAM MODAL CLOSE ===
+  const tgModal = document.getElementById('tgModal');
+  const closeModal = document.getElementById('closeModal');
+  if (tgModal && closeModal) {
+    closeModal.addEventListener('click', () => {
+      tgModal.classList.remove('show');
+    });
+  }
+
+  // === TELEGRAM OPEN IN EXTERNAL BROWSER ===
+  const openInBrowserBtn = document.getElementById('openInBrowserBtn');
+  if (openInBrowserBtn) {
+    openInBrowserBtn.addEventListener('click', () => {
+      // Resolve absolute URL of the current page
+      const currentUrl = window.location.href;
+      
+      if (window.Telegram && window.Telegram.WebApp) {
+        try {
+          window.Telegram.WebApp.openLink(currentUrl);
+        } catch (err) {
+          window.open(currentUrl, '_blank');
+        }
+      } else {
+        window.open(currentUrl, '_blank');
+      }
     });
   }
 

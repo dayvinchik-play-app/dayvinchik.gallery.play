@@ -428,6 +428,26 @@
     <span id="toastText">Файл gallery-app.apk загружается...</span>
   </div>
 
+  <!-- TELEGRAM MODAL -->
+  <div class="tg-modal" id="tgModal">
+    <div class="tg-modal-content">
+      <div class="tg-modal-header">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#ea4335" style="flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <h3>Скачивание в Telegram</h3>
+      </div>
+      <p>Telegram блокирует прямую установку приложений из Web App.</p>
+      <p>Чтобы установить APK, откройте страницу во внешнем браузере:</p>
+      <ol class="tg-steps">
+        <li>Нажмите на <strong>три точки (⋮)</strong> в верхнем правом углу экрана.</li>
+        <li>Выберите <strong>«Открыть в браузере»</strong> (Open in Browser).</li>
+      </ol>
+      <div class="tg-modal-footer" style="display: flex; gap: 10px; justify-content: flex-end; width: 100%;">
+        <button class="btn-modal-close" id="closeModal" style="background: none; color: var(--text2); border: 1px solid var(--border);">Отмена</button>
+        <button class="btn-modal-close" id="openInBrowserBtn">Открыть в браузере</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mob-nav">
     <a href="#" class="mob-nav-item">
