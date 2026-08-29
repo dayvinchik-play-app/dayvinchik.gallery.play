@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // === INSTALL BUTTON ===
   const installBtn = document.getElementById('installBtn');
+  let downloading = false;
   if (installBtn) {
     installBtn.addEventListener('click', (e) => {
       // If already downloaded and showing "Открыть", show toast
@@ -12,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Запуск приложения...');
         return;
       }
+      
+      if (downloading) return;
+      downloading = true;
       
       e.preventDefault();
       let progress = 0;
@@ -32,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
           installBtn.classList.add('downloaded');
           installBtn.innerHTML = 'Открыть';
           showToast('Скачивание завершено. Запуск файла...');
+          downloading = false;
         } else {
           installBtn.innerHTML = `Скачивание... ${progress}%`;
         }
