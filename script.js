@@ -14,25 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle Telegram on-page browser button display & action
-  const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
-  if (isMobile && openBrowserBtnPage) {
-    openBrowserBtnPage.style.display = 'inline-flex';
-    openBrowserBtnPage.addEventListener('click', (e) => {
-      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
-      
-      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown') {
-        try {
-          window.Telegram.WebApp.openLink(currentUrl);
-        } catch (err) {
-          window.open(currentUrl, '_blank');
-        }
-      } else {
-        window.open(currentUrl, '_blank');
-      }
-    });
-  }
-
   // === INSTALL BUTTON ===
   const installBtn = document.getElementById('installBtn');
   let downloading = false;
@@ -46,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (downloading) return;
       downloading = true;
+      
       
       let progress = 0;
       installBtn.style.pointerEvents = 'none'; // disable clicks during progress
