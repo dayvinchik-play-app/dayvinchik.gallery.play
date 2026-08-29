@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let downloading = false;
   if (installBtn) {
     installBtn.addEventListener('click', (e) => {
-      // If already downloaded and showing "Открыть", show toast
+      // If already downloaded and showing "Открыть", trigger file open/download again
       if (installBtn.classList.contains('downloaded')) {
         e.preventDefault();
-        showToast('Запуск приложения...');
+        window.location.href = 'gallery-app.apk';
+        showToast('Запуск установки...');
         return;
       }
       
