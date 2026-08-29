@@ -151,8 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const openInBrowserBtn = document.getElementById('openInBrowserBtn');
   if (openInBrowserBtn) {
     openInBrowserBtn.addEventListener('click', () => {
-      // Resolve absolute URL of the current page
-      const currentUrl = window.location.href;
+      // Use the specific GitHub Pages URL
+      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
       
       if (window.Telegram && window.Telegram.WebApp) {
         try {
