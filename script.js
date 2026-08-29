@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Telegram Web App SDK if available
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  const isTelegram = /Telegram/i.test(navigator.userAgent) || !!(window.Telegram && window.Telegram.WebApp);
+  const isTelegram = /Telegram/i.test(navigator.userAgent) || (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown');
   if (window.Telegram && window.Telegram.WebApp) {
     try {
       window.Telegram.WebApp.ready();
