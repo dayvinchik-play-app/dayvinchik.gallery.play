@@ -5,37 +5,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // === INSTALL BUTTON ===
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
-    installBtn.addEventListener('click', () => {
-      const orig = installBtn.innerHTML;
-      installBtn.disabled = true;
+    installBtn.addEventListener('click', (e) => {
+      // If already downloaded and showing "Открыть", show toast
+      if (installBtn.classList.contains('downloaded')) {
+        e.preventDefault();
+        showToast('Запуск приложения...');
+        return;
+      }
+      
+      e.preventDefault();
       let progress = 0;
+      installBtn.style.pointerEvents = 'none'; // disable clicks during download
       installBtn.innerHTML = 'Скачивание... 0%';
 
       const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 12) + 5; // increment randomly
+        progress += Math.floor(Math.random() * 15) + 5;
         if (progress >= 100) {
           progress = 100;
           clearInterval(interval);
           
-          // Trigger APK download
-          const a = document.createElement('a');
-          a.href = 'gallery-app.apk';
-          a.download = 'gallery-app.apk';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          // Trigger actual download and let browser auto-open/install if supported
+          window.location.href = 'gallery-app.apk';
 
-          installBtn.innerHTML = '✔ Загружено';
-          showToast('Файл gallery-app.apk успешно скачан');
-
-          setTimeout(() => {
-            installBtn.innerHTML = orig;
-            installBtn.disabled = false;
-          }, 3000);
+          // Change button state to "Открыть"
+          installBtn.style.pointerEvents = 'auto';
+          installBtn.classList.add('downloaded');
+          installBtn.innerHTML = 'Открыть';
+          showToast('Скачивание завершено. Запуск файла...');
         } else {
           installBtn.innerHTML = `Скачивание... ${progress}%`;
         }
-      }, 150);
+      }, 100);
     });
   }
 

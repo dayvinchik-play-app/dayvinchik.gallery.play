@@ -180,8 +180,9 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
   font-family: inherit;
   transition: background .2s;
+  text-decoration: none;
 }
-.btn-install:hover { background: var(--green-hover); }
+.btn-install:hover { background: var(--green-hover); text-decoration: none; color: #fff; }
 
 .btn-share {
   display: inline-flex;
