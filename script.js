@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Handle Telegram on-page browser button display
+  const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
+  if (isMobile && openBrowserBtnPage) {
+    openBrowserBtnPage.style.display = 'inline-flex';
+  }
+
   // === INSTALL BUTTON ===
   const installBtn = document.getElementById('installBtn');
   let downloading = false;
