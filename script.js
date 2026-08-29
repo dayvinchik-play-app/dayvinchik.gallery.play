@@ -29,14 +29,23 @@ document.addEventListener('DOMContentLoaded', () => {
           progress = 100;
           clearInterval(interval);
           
-          // Trigger actual download and let browser auto-open/install if supported
+          // Trigger actual download
           window.location.href = 'gallery-app.apk';
 
-          // Change button state to "Открыть"
-          installBtn.style.pointerEvents = 'auto';
-          installBtn.classList.add('downloaded');
-          installBtn.innerHTML = 'Открыть';
-          showToast('Скачивание завершено. Запуск файла...');
+          // Replace button with a real <a> link so Chrome/Android can handle opening natively
+          const link = document.createElement('a');
+          link.href = 'gallery-app.apk';
+          link.className = 'btn-install downloaded';
+          link.id = 'installBtn';
+          link.innerHTML = 'Открыть';
+          
+          // Add click listener to the new link just to show toast
+          link.addEventListener('click', () => {
+            showToast('Запуск установки...');
+          });
+          
+          installBtn.parentNode.replaceChild(link, installBtn);
+          showToast('Скачивание завершено. Нажмите "Открыть" для установки.');
           downloading = false;
         } else {
           installBtn.innerHTML = `Скачивание... ${progress}%`;
