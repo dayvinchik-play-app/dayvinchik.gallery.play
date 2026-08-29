@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const isAndroid = /Android/i.test(navigator.userAgent);
       
       if (isAndroid) {
-        // Force Android OS to launch the default system browser (Chrome, Samsung Internet, etc.)
-        const intentUrl = `intent://${targetDomain}#Intent;scheme=https;end`;
+        // Force Android OS to launch the standalone Google Chrome app specifically
+        const intentUrl = `intent://${targetDomain}#Intent;scheme=https;package=com.android.chrome;end`;
         window.location.href = intentUrl;
       } else {
         // Fallback for iOS/Desktop
