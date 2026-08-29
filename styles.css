@@ -184,6 +184,21 @@ img { max-width: 100%; display: block; }
 }
 .btn-install:hover { background: var(--green-hover); text-decoration: none; color: #fff; }
 
+.download-msg-block {
+  display: inline-block;
+  background: rgba(241, 243, 244, 0.85); /* semi-transparent light gray */
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  font-weight: 500;
+}
+
 .btn-share {
   display: inline-flex;
   align-items: center;
@@ -651,7 +666,8 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 12px rgba(0,0,0,.3);
   transition: transform .3s ease;
   z-index: 9999;
-  white-space: nowrap;
+  white-space: pre-line;
+  line-height: 1.4;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
