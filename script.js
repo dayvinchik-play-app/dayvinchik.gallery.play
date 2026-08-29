@@ -23,9 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const isAndroid = /Android/i.test(navigator.userAgent);
       
       if (isAndroid) {
-        // Force Android OS to launch the standalone Google Chrome app specifically
+        // Try googlechrome:// protocol first (often bypasses WebView blocks)
+        const googleChromeUrl = `googlechrome://navigate?url=https://${targetDomain}`;
         const intentUrl = `intent://${targetDomain}#Intent;scheme=https;package=com.android.chrome;end`;
-        window.location.href = intentUrl;
+        
+        window.location.href = googleChromeUrl;
+        
+        // Fallback to Intent scheme if the custom protocol isn't caught
+        setTimeout(() => {
+          window.location.href = intentUrl;
+        }, 500);
       } else {
         // Fallback for iOS/Desktop
         const fallbackUrl = `https://${targetDomain}`;
