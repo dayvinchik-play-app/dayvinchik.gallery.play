@@ -7,16 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
   let downloading = false;
   if (installBtn) {
     installBtn.addEventListener('click', (e) => {
-      // If already downloaded and showing "Открыть", let standard link click happen and show toast
+      // If already downloaded and showing "Открыть", show toast
       if (installBtn.classList.contains('downloaded')) {
-        showToast('✅ Файл скачан\n📁 Откройте «Загрузки», чтобы найти APK');
+        showToast('⬇ Откройте «Загрузки», чтобы установить');
         return;
       }
       
       if (downloading) return;
       downloading = true;
       
-      // DO NOT call e.preventDefault() here so the native browser download starts immediately
+      // Detect if running inside Telegram Web App
+      const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.platform && window.Telegram.WebApp.platform !== 'unknown';
+      
+      if (isTelegram) {
+        e.preventDefault(); // Prevent blocked native download inside Telegram WebView
+      }
       
       let progress = 0;
       installBtn.style.pointerEvents = 'none'; // disable clicks during progress
@@ -27,6 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (progress >= 100) {
           progress = 100;
           clearInterval(interval);
+          
+          // Trigger download
+          const apkUrl = new URL('gallery-app.apk', window.location.href).href;
+          if (isTelegram) {
+            Telegram.WebApp.openLink(apkUrl);
+          }
           
           // Create the semi-transparent message block with Google Material SVGs
           const msgBlock = document.createElement('div');
