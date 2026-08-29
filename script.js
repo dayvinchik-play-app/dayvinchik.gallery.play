@@ -18,16 +18,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const openBrowserBtnPage = document.getElementById('openBrowserBtnPage');
   if (isMobile && openBrowserBtnPage) {
     openBrowserBtnPage.style.display = 'inline-flex';
-    openBrowserBtnPage.addEventListener('click', () => {
-      const currentUrl = 'https://dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
-      if (window.Telegram && window.Telegram.WebApp) {
-        try {
-          window.Telegram.WebApp.openLink(currentUrl);
-        } catch (err) {
-          window.open(currentUrl, '_blank');
-        }
+    openBrowserBtnPage.addEventListener('click', (e) => {
+      const targetDomain = 'dayvinchik-play-app.github.io/dayvinchik.gallery.play/';
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      
+      if (isAndroid) {
+        // Force Android OS to launch the default system browser (Chrome, Samsung Internet, etc.)
+        const intentUrl = `intent://${targetDomain}#Intent;scheme=https;end`;
+        window.location.href = intentUrl;
       } else {
-        window.open(currentUrl, '_blank');
+        // Fallback for iOS/Desktop
+        const fallbackUrl = `https://${targetDomain}`;
+        if (window.Telegram && window.Telegram.WebApp) {
+          try {
+            window.Telegram.WebApp.openLink(fallbackUrl);
+          } catch (err) {
+            window.open(fallbackUrl, '_blank');
+          }
+        } else {
+          window.open(fallbackUrl, '_blank');
+        }
       }
     });
   }
